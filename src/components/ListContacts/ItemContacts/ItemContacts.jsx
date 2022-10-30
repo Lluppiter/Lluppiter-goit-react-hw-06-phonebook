@@ -1,11 +1,16 @@
 import styles from '../ItemContacts/ItemContacts.module.css';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectContact, selectFilter } from 'redux/contactSelector';
+import { deleteContact } from 'redux/contactSlice';
 
-export const ItemContacts = ({ contacts, filter, userDelete }) => {
+export const ItemContacts = () => {
+  const contacts = useSelector(selectContact);
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
 
-  const onClick = (e) => {    
-    userDelete(e.target.value)
-  }
+  const onClick = e => {
+    dispatch(deleteContact(e.target.value));
+  };
   return (
     <>
       {contacts
@@ -29,9 +34,4 @@ export const ItemContacts = ({ contacts, filter, userDelete }) => {
         ))}
     </>
   );
-};
-ItemContacts.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  filter: PropTypes.string.isRequired,
-  userDelete: PropTypes.func.isRequired,
 };

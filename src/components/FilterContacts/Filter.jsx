@@ -1,10 +1,13 @@
 import styles from '../FilterContacts/Filter.module.css';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { onChange } from 'redux/contactFilterSlice';
 
-export const Input = ({ filterContact }) => {
-  const onChange = (e) => {
-    filterContact(e.target.value)
-  }
+export const Input = () => {
+  const dispatch = useDispatch();
+
+  const handleFilter = e => {
+    dispatch(onChange(e.target.value));
+  };
 
   return (
     <div className={styles.filter}>
@@ -12,11 +15,8 @@ export const Input = ({ filterContact }) => {
       <input
         className={styles.filterInput}
         name="filter"
-        onChange={onChange}
+        onChange={handleFilter}
       />
     </div>
   );
-};
-Input.propTypes = {
-  filterContact: PropTypes.func.isRequired,
 };
